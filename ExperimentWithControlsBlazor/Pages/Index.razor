@@ -6,10 +6,30 @@
     </div>
     <div class="row mt-2">
         <div class="col-sm-6">
+            Enter text:
+        </div>
+        <div class="col-sm-6">
+            <input type="text" placeholder="Enter text" @onchange="UpdateNumericValue"/>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
             Pick a number:
         </div>
         <div class="col-sm-6">
             <input type="range" @onchange="UpdateValue" />
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-6">Click a button:</div>
+            <div class="col-sm-6 btn-group" role="group">
+                @for (var buttonNumber = 1; buttonNumber <= 6; buttonNumber++)
+                 {
+                    string valueToDisplay = $"Button #{buttonNumber}";
+                    <button type="button" class="btn btn-secondary" @onclick="() => ButtonClick(valueToDisplay)">
+                        @buttonNumber
+                    </button>
+                 }
+            </div>
         </div>
     </div>
     <div class="row mt-5">
@@ -23,8 +43,24 @@
 {
     private string DisplayValue = "";
 
+    // Method that displays value of the slider 
     private void UpdateValue(ChangeEventArgs e)
     {
         DisplayValue = e.Value.ToString();
+    }
+
+    //  Method that only allows a numerical value to be submitted in the intput
+    private void UpdateNumericValue(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int result))
+        {
+            DisplayValue = e.Value.ToString();
+        }
+    }
+
+    // Method that displays value after button click
+    private void ButtonClick(string displayValue)
+    {
+        DisplayValue = displayValue;
     }
 }
